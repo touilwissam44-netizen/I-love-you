@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love! ❤️🎉</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="k.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        gold: {
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        cursive: ['Dancing Script', 'cursive'],
+                        romantic: ['Great Vibes', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="relative min-h-screen pb-16">
+
+    <!-- Interactive Floating Particle & Hearts Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Main Birthday Container -->
+    <main class="relative z-10 max-w-4xl mx-auto px-4 pt-28 text-center space-y-12">
+
+
+        <!-- Hero Romantic Banner -->
+        <section class="space-y-4">
+            <div class="inline-flex items-center gap-2 bg-white/70 border border-rose-300 text-rose-700 text-xs sm:text-sm font-semibold px-5 py-1.5 rounded-full backdrop-blur-md shadow-sm">
+                <span>🌹 Celebrating The Love Of My Life Khawla 🌹</span>
+            </div>
+
+            <h1 class="font-romantic text-6xl sm:text-8xl md:text-9xl text-rose-600 rose-glow leading-tight">
+                Happy Birthday, <span id="heroName" class="text-rose-700">My Princess</span>!
+            </h1>
+
+            <p class="text-lg sm:text-2xl text-rose-950 font-cursive max-w-2xl mx-auto font-semibold">
+                "You are my today and all of my tomorrows. Wishing the most beautiful soul the happiest birthday ever!" 💖
+            </p>
+
+            <!-- Love Celebration Timer Banner -->
+            <div class="pt-2">
+                <div class="inline-flex items-center gap-4 bg-white/60 border border-rose-300/80 rounded-2xl p-3 sm:p-4 px-6 shadow-sm">
+                    <div class="flex items-center gap-2 text-rose-800 font-bold text-sm sm:text-base">
+                        <i class="fas fa-heart text-rose-500 animate-bounce"></i>
+                        <span>Today is All About You:</span>
+                    </div>
+                    <div id="countdown" class="flex gap-2 text-rose-700 font-extrabold text-sm sm:text-base">
+                        <span class="bg-white/90 px-3 py-1 rounded-lg border border-rose-200">10</span>
+                        <span class="bg-white/90 px-3 py-1 rounded-lg border border-rose-200">20</span>
+                        <span class="bg-white/90 px-3 py-1 rounded-lg border border-rose-200">2026</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Interactive Birthday Cake Section -->
+        <section class="glass-card-gold rounded-3xl p-8 max-w-md mx-auto relative overflow-hidden transition-all duration-300 hover:shadow-2xl">
+            <h2 class="font-cursive text-3xl font-bold text-rose-800 mb-1">Make a Wish, My Princess!</h2>
+            <p class="text-xs text-rose-900/70 mb-6">Tap the flame to blow out the candle and make a wish</p>
+
+            <div class="cake-container">
+                <div class="cake">
+                    <div class="plate"></div>
+                    
+                    <!-- Cake Bottom Layer -->
+                    <div class="layer layer-bottom">
+                        <div class="icing"></div>
+                        <div class="drip" style="left: 12px;"></div>
+                        <div class="drip" style="left: 50px; height: 22px;"></div>
+                        <div class="drip" style="left: 95px;"></div>
+                        <div class="drip" style="left: 140px; height: 20px;"></div>
+                        <div class="drip" style="left: 175px;"></div>
+                    </div>
+                    
+                    <!-- Cake Top Layer -->
+                    <div class="layer layer-top">
+                        <div class="icing"></div>
+                        <div class="drip" style="left: 15px; height: 14px;"></div>
+                        <div class="drip" style="left: 65px; height: 20px;"></div>
+                        <div class="drip" style="left: 115px; height: 12px;"></div>
+                    </div>
+
+                    <!-- Candle -->
+                    <div class="candle" style="left: 50%; transform: translateX(-50%);" onclick="blowOutCandle()">
+                        <div class="flame" id="candleFlame"></div>
+                        <div class="smoke" id="candleSmoke"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wish Celebration Message -->
+            <div id="wishBanner" class="hidden mt-6 p-4 bg-rose-200/60 border border-rose-400 rounded-2xl text-rose-950 animate-bounce text-sm font-bold shadow-sm">
+                "May every wish in your heart come true today and forever, my darling!"
+            </div>
+        </section>
+
+        <!-- "Reasons Why I Love You" 3D Flip Cards Grid -->
+        <section class="space-y-6">
+            <div class="space-y-2">
+                <h2 class="font-romantic text-6xl sm:text-8xl md:text-5xl text-rose-600 rose-glow leading-tight">
+                    Reasons Why I Love You 💖
+                </h2>
+                <p class="text-sm text-rosegold-600 font-medium">Click on any card to flip and discover what makes you so special to me</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Flip Card 1 -->
+                <div class="flip-card h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border-blush-200">
+                            <i class="fas fa-crown text-rose-400  sm:text-6xl"></i>
+                            <h3 class="text-lg font-bold text-rose-800">Love Note #1</h3>
+                            <p class="text-xs text-rosegold-400 mt-2">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back glass-card-gold p-6 flex items-center justify-center text-center text-sm font-medium text-rosegold-600 font-serif italic">
+                            "The way your smile lights up the room and instantly brightens up even my worst days."
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flip Card 2 -->
+                <div class="flip-card h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border-blush-200">
+                            <i class="fas fa-crown text-rose-400  sm:text-6xl"></i>
+                            <h3 class="text-lg font-bold text-rose-800">Love Note #2</h3>
+                            <p class="text-xs text-rosegold-400 mt-2">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back glass-card-gold p-6 flex items-center justify-center text-center text-sm font-medium text-rosegold-600 font-serif italic">
+                            "Your endless empathy, gentleness, and how genuinely caring you are to everyone around you."
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flip Card 3 -->
+                <div class="flip-card h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border-blush-200">
+                            <i class="fas fa-crown text-rose-400  sm:text-6xl"></i>
+                            <h3 class="text-lg font-bold text-rose-800">Love Note #3</h3>
+                            <p class="text-xs text-rosegold-400 mt-2">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back glass-card-gold p-6 flex items-center justify-center text-center text-sm font-medium text-rosegold-600 font-serif italic">
+                            "Hearing your giggle is my absolute favorite sound in the entire world."
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flip Card 4 -->
+                <div class="flip-card h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border-blush-200">
+                            <i class="fas fa-crown text-rose-400  sm:text-6xl"></i>
+                            <h3 class="text-lg font-bold text-rose-800">Love Note #4</h3>
+                            <p class="text-xs text-rosegold-400 mt-2">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back glass-card-gold p-6 flex items-center justify-center text-center text-sm font-medium text-rosegold-600 font-serif italic">
+                            "How we can talk for hours about everything and anything without ever getting tired."
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flip Card 5 -->
+                <div class="flip-card h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border-blush-200">
+                            <i class="fas fa-crown text-rose-400  sm:text-6xl"></i>
+                            <h3 class="text-lg font-bold text-rose-800">Love Note #5</h3>
+                            <p class="text-xs text-rosegold-400 mt-2">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back glass-card-gold p-6 flex items-center justify-center text-center text-sm font-medium text-rosegold-600 font-serif italic">
+                            "How peaceful and completely at home I feel whenever I am holding your hand."
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flip Card 6 -->
+                <div class="flip-card h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border-blush-200">
+                            <i class="fas fa-crown text-rose-400  sm:text-6xl"></i>
+                            <h3 class="text-lg font-bold text-rose-800">Love Note #6</h3>
+                            <p class="text-xs text-rosegold-400 mt-2">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back glass-card-gold p-6 flex items-center justify-center text-center text-sm font-medium text-rosegold-600 font-serif italic">
+                            "Because you are uniquely you — beautiful inside and out, my best friend, and the love of my life."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Memory Gallery (Polaroid Style) -->
+        <section class="space-y-6">
+            <div class="space-y-1">
+                <h2 class="font-cursive text-4xl font-bold text-rose-800 rose-glow">
+                    Our Sweet Memories
+                </h2>
+                <p class="text-sm text-rose-900/80">Click any image frame to upload your favorite couple photos!</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-4">
+                <!-- Polaroid 1 -->
+                <div class="polaroid rounded-lg">
+                    <div class="relative h-56 bg-rose-100 rounded overflow-hidden mb-3 group">
+                        <img id="imgPreview1" src="https://i.pinimg.com/736x/8d/41/08/8d41083134fb5b87b5d0f07fb1d9ca1b.jpg" alt="Romantic Couple" class="w-full h-full object-cover">
+                        <label for="imgInput1" class="absolute inset-0 bg-rose-950/40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 cursor-pointer transition">
+                            <i class="fas fa-camera text-3xl"></i>
+                        </label>
+                        <input type="file" id="imgInput1" accept="image/*" class="hidden" onchange="previewImage(event, 'imgPreview1')">
+                    </div>
+                    <p class="font-cursive text-xl font-bold text-rose-900">Where It All Began ❤️</p>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div class="polaroid rounded-lg">
+                    <div class="relative h-56 bg-rose-100 rounded overflow-hidden mb-3 group">
+                        <img id="imgPreview2" src="https://i.pinimg.com/736x/c0/3c/af/c03caf1bc237421ddfb3086182dbb9be.jpg" alt="Romantic Date" class="w-full h-full object-cover">
+                        <label for="imgInput2" class="absolute inset-0 bg-rose-950/40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 cursor-pointer transition">
+                            <i class="fas fa-camera text-3xl"></i>
+                        </label>
+                        <input type="file" id="imgInput2" accept="image/*" class="hidden" onchange="previewImage(event, 'imgPreview2')">
+                    </div>
+                    <p class="font-cursive text-xl font-bold text-rose-900">Usssssssssssss ✨</p>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div class="polaroid rounded-lg">
+                    <div class="relative h-56 bg-rose-100 rounded overflow-hidden mb-3 group">
+                        <img id="imgPreview3" src="https://i.pinimg.com/736x/1a/68/34/1a6834cf93dada1d79b83b5c73c4d6fa.jpg" alt="Girlfriend Portrait" class="w-full h-full object-cover">
+                        <label for="imgInput3" class="absolute inset-0 bg-rose-950/40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 cursor-pointer transition">
+                            <i class="fas fa-camera text-3xl"></i>
+                        </label>
+                        <input type="file" id="imgInput3" accept="image/*" class="hidden" onchange="previewImage(event, 'imgPreview3')">
+                    </div>
+                    <p class="font-cursive text-xl font-bold text-rose-900">Forever & Always 🌹</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personal Romantic Love Letter -->
+        <section class="glass-card rounded-3xl p-6 sm:p-10 text-left space-y-6">
+            <div class="flex items-center justify-between border-b border-rose-300/60 pb-4">
+                <h2 class="font-romantic text-4xl sm:text-5xl font-bold text-rose-700">A Love Letter For You </h2>
+                <i class="fas fa-heart text-rose-500 text-3xl animate-pulse"></i>
+            </div>
+
+            <textarea id="customGreeting" spellcheck="false" rows="6" class="w-full bg-white/70 border border-rose-300 rounded-2xl p-4 text-rose-950 text-base leading-relaxed focus:outline-none focus:border-rose-500 transition resize-none shadow-inner font-medium">
+7abibati Khawla,
+
+Happy Birthday to the most amazing, kind, and gorgeous woman in the world! From the moment you entered my life, everything became brighter, sweeter, and infinitely more meaningful.
+
+Xokraaan 3la 7obk saadi9 o i3tina2k o htimamk o da3mk liyaa o dima m3aya mli kan7tajk kanl9ak dima fjnbi wlh ila xokran o 9lila f79k o kawnaki afdal xakhs f7yati o afdal zawjaa fl3alam ana fr7an bzaf 7it 3ndi insana b7alk f7yati driyfaa o cuute o zwinaa dwzt m3ak afdal 3am f7yati o inxa alah dimaa wakhaa 7aliyan lw9ita li kanktb fiha hadxi 10/17/2026 4:58 m9l9a liya kantxwaa hhhhh makan9dx nxofk m9l9a wla nkhlik m9l9a wlk ya3ni sbrr o sf hhhhh awdii wakha hakk o wakha ma3rt xno itra kanbriiik bzaaf bzaaf a 7biba dyaliii o kanmot 3lik o bzaaaf ga3 ktr mn l9yas o kaytzad nhar 3la nhar 3arf rasi dima m9l9k kan7awl nkon a7san lik o n3amlk a7san mo3amal 7it tsta79i maktr wlk l7ad biid ma3ndi mandir sm7ii liyaa ila kan9l9K anaa m3ak o radi nb9a dima m3ak a 7biba dyalii a big kiss for you sweetheart mwaaaaaaaaaaaaaaaa7😘😘😘😘.
+
+Forever Yours with all my love Babe ❤️,
+
+            </textarea>
+
+            <div class="flex flex-wrap items-center justify-end gap-3 pt-2 ">
+
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="pt-6 text-center text-xs text-rose-900/70 font-semibold">
+            Made with all my heart & love for your special birthday celebration ✨ ❤️
+        </footer>
+
+    </main>
+
+    <!-- Notification Toast Modal -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-rose-500 text-white font-bold px-6 py-3 rounded-full shadow-2xl transition transform translate-y-20 opacity-0 z-50 flex items-center gap-2 text-sm">
+        <i class="fas fa-heart"></i>
+        <span id="toastMsg">Love letter copied!</span>
+    </div>
+ 
+    <script src="k.js"></script>
+</body>
+</html>
